@@ -4,6 +4,10 @@
 # COMMAND ----------
 
 def unmount_adls(storage_acount_name, containers):
+     '''
+     Function takes Azure Blob Storage account name and list of containers that are needed.
+     Containers are unmounted to match list.
+     '''
     stripped_mounts = {i.split('/')[-1] for i in [c.mountPoint for c in dbutils.fs.mounts()]}
     mounts_to_remove = stripped_mounts - containers
     for container in mounts_to_remove:
@@ -19,6 +23,10 @@ unmount_adls(storage_account_name, containers)
 # COMMAND ----------
 
 def mount_adls (storage_account, containers, secret):
+      '''
+     Function takes Azure Blob Storage account name and list of containers that are needed.
+     Containers are mounted to match list.
+     '''
     stripped_mounts = {i.split('/')[-1] for i in [c.mountPoint for c in dbutils.fs.mounts()]}
     new_mounts = containers.difference(stripped_mounts)
     for container in new_mounts:
@@ -34,6 +42,11 @@ mount_adls(storage_account_name, containers, secret)
 # COMMAND ----------
 
 def merge_delta_data(input_df, db_name, table_name, folder_path, merge_condition, partition_column):
+     '''
+     Function takes input dataframe, database and table names, folder path, merge column condition, 
+     and partition parameters. Function returns new dataset if new data is added, appends if exists or updates 
+     value if existed by merge condition.
+     '''
     spark.conf.set('spark.databricks.optimizer.dynamicPruning', 'true')
     from delta.tables import DeltaTable
     if (spark._jsparkSession.catalog().tableExists(f'{db_name}.{table_name}')):
@@ -54,6 +67,9 @@ def merge_delta_data(input_df, db_name, table_name, folder_path, merge_condition
 # COMMAND ----------
 
 def email_logs(message):
+     '''
+     Function takes message and sends it to recipients.
+     '''
     import smtplib, ssl
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
