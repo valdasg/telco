@@ -50,3 +50,19 @@ def merge_delta_data(input_df, db_name, table_name, folder_path, merge_condition
             .partitionBy(partition_column) \
             .format('delta') \
             .saveAsTable(f'{db_name}.{table_name}')
+
+# COMMAND ----------
+
+def email_logs(message):
+    import smtplib, ssl
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = sender  # Enter your address
+    receiver_email = recipient  # Enter receiver address
+    password = server_password
+    message = message
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)

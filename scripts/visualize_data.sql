@@ -16,3 +16,12 @@ order by number_of_customers desc;
 SELECT customer_id, sum(duration) usage
 FROM default.silver_usage
 group by customer_id;
+
+-- COMMAND ----------
+
+message = 'Your visualisations are ready. View them on your Databrics Account / Dashboards'
+email_logs(message)
+
+-- COMMAND ----------
+
+dbutils.notebook.exit('Success')

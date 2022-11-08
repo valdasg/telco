@@ -74,7 +74,7 @@ NotValidCnt = NotValidDF.count()
 
  # Exit with error message
 if (NotValidCnt > 0):
-    raise Exception("'Null Values in customer_id field'")
+    email_logs('Ingestion Failed: Null Values in customer_id field')
 
 # COMMAND ----------
 
@@ -86,7 +86,7 @@ df_dcnt = telco_df.select("customer_id").distinct().count()
 
 # Exit with error message
 if (df_dcnt != df_cnt):
-    raise Exception('Duplicates found in customer_id field')
+    email_logs('Ingestion Failed: Duplicate Values in customer_id field')
 
 # COMMAND ----------
 
