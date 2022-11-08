@@ -30,6 +30,44 @@ File from SFTP to Azure Blob Storage is loaded using Azure logic app, having a t
 
 #### Azure Blob Storage
 Data is stored in tiers of raw and silver. Data from SFTP is downloaded to raw folder and after transformation is saved to silver.
+Due to requirements lifecycle is set to delete files after 7 days:
+
+```
+{
+  "rules": [
+    {
+      "enabled": true,
+      "name": "Delete after 7 days",
+      "type": "Lifecycle",
+      "definition": {
+        "actions": {
+          "version": {
+            "delete": {
+              "daysAfterCreationGreaterThan": 7
+            }
+          },
+          "baseBlob": {
+            "delete": {
+              "daysAfterCreationGreaterThan": 7
+            }
+          },
+          "snapshot": {
+            "delete": {
+              "daysAfterCreationGreaterThan": 7
+            }
+          }
+        },
+        "filters": {
+          "blobTypes": [
+            "blockBlob"
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
 
 #### Databricks concept
 Connection with Databricks and Blob storage is done via secret scope and a Databricks key vis CLI:
