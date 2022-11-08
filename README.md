@@ -6,7 +6,7 @@ Client stores data on SFTP server and data is updated wekly.
 Due to data scale (initial 1.66 Gb CSV) Spark Engine is chosen to manipulate data. Best commercial application of Spark
 is Databrics, at the same time giving opportunity to do other required tasks:
 - data ingest
-- data validation
+- data validation and quick notifications
 - data transformation
 - simple vizualisation
 
@@ -80,7 +80,7 @@ Databricks consist project consists of three distinct dirrectories: constants, f
 - transform_data: transforms data according business requirements
 - visualize_data: cretaes vizualisation and dashboard
 
-Databricks workflow connects all the scripts and run jobs on weekly basis sending email messages on failed execution:
+Databricks workflow connects all the scripts and run jobs on weekly basis sending email messages on failed execution. Also error log is sent everytime null or duplicate values found in raw data customer_id field:
 ![alt etl_pipeline](img/etl_pipeline.png)
 
 Data Errors (nulls and duplicates in customer_id) in the file are cought with python script.
