@@ -76,12 +76,19 @@ db secrets create-scope --scope myblob
 db secrets put --scope myblob --key accesskey
 ```
 Databricks consist project consists of three distinct dirrectories: constants, functions and scripts. Constants contains blob folders, account and scope names. Functions contain functions needed to run scripts. Scripts are the workhorse of the project:
-- ingest_data: script validates schema a nd ingests data to dbfs file system
-- validate_data: script validates data ingested (null values, formats)
+- ingest_data: script validates schema and data, ingests data to dbfs file system
 - transform_data: transforms data according business requirements
 - visualize_data: cretaes vizualisation and dashboard
 
-Databricks workflow connects all the scripts and run jobs on weekly basis sending email messages on failed execution.
+Databricks workflow connects all the scripts and run jobs on weekly basis sending email messages on failed execution:
+![alt etl_pipeline](img/etl_pipeline.png)
+
+Data Errors (nulls and duplicates in customer_id) in the file are cought with python script.
+
+#### Visualisations
+As per request, interaction_type / customer, plan / customer, usage / customer charts are plotted on dashboard.
+
+![alt dashboard](img/dashboard.png)
 
 ### Things to consider
 **Raw data structure** think about better way to name the files based on ingest date.
