@@ -96,4 +96,5 @@ As per request, interaction_type / customer, plan / customer, usage / customer c
 **Inremental load** think about adding incremental load actions, to append new data, modify if exists.
 
 **Data partitioning** think about partitioning. Data as is in csv file is difficult to partition to meet bussiness goals (customer_id's are unique, there are way too many plan_ids for partition to make sense).
+
 **Unit Tests** to test functions
