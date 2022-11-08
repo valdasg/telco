@@ -47,5 +47,7 @@ Databricks workflow connects all the scripts and run jobs on weekly basis sendin
 
 ### Things to consider
 **Raw data structure** think about better way to name the files based on ingest date.
+
 **Inremental load** think about adding incremental load actions, to append new data, modify if exists.
+
 **Data partitioning** think about partitioning. Data as is in csv file is difficult to partition to meet bussiness goals (customer_id's are unique, there are way too many plan_ids for partition to make sense).
