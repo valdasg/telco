@@ -25,6 +25,25 @@ Data is encrypted thus SFTP protects against password sniffing and man-in-the-mi
 the data using encryption and cryptographic hash functions, and autenticates both the server and the user.
 
 File from SFTP to Azure Blob Storage is loaded using Azure logic app, having a trigger sensor to start upload once file structure changes:
+
 ![alt logic_app](img/logic_app.png)
+
+#### Azure Blob Storage
+Data is stored in tiers of raw and silver. Data from SFTP is downloaded to raw folder and after transformation is saved to silver.
+
+#### Databricks concept
+Connection with Databricks and Blob storage is done via secret scope and a Databricks key vis CLI:
+```
+db secrets create-scope --scope myblob
+db secrets put --scope myblob --key accesskey
+```
+Databricks consist project consists of three distinct dirrectories: constants, functions and scripts. Constants contains blob folders, account and scope names. Functions contain functions needed to run scripts. Scripts are the workhorse of the project:
+- ingest_data: script validates schema a nd ingests data to dbfs file system
+- validate_data: script validates data ingested (null values, formats)
+- transform_data: transforms data according business requirements
+- visualize_data: cretaes vizualisation and dashboard
+
+Databricks workflow connects all the scripts and run jobs on weekly basis sending email messages on failed execution.
+
 
 
