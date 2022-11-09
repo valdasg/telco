@@ -24,9 +24,19 @@ SFTP replaces FTP providing all the functionality offered, but more securely and
 Data is encrypted thus SFTP protects against password sniffing and man-in-the-middle attacks. It protects the integrity of 
 the data using encryption and cryptographic hash functions, and autenticates both the server and the user.
 
-File from SFTP to Azure Blob Storage is loaded using Azure logic app, having a trigger sensor to start upload once file structure changes:
+File from SFTP to Azure Blob Storage is loaded using Azure Data Factory, having a tumbling window sensor to start upload files every of last 24 hours.
+For demo purposes I will be using demo SFTP server:
 
-![alt logic_app](img/logic_app.png)
+![alt sftp](img/sftp_server.png)
+
+Data source and sink are set as SFTP server and Azure Blob container:
+
+![alt source](img/sftp_con.png)
+![alt sink](img/blob_con.png)
+
+Futhermore, pipeline is created to execute copy every 24 hours:
+
+![alt datafactory](img/data_factory.png)
 
 #### Azure Blob Storage
 Data is stored in tiers of raw and silver. Data from SFTP is downloaded to raw folder and after transformation is saved to silver.
